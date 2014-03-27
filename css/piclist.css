@@ -1,0 +1,42 @@
+.pic-list img, #works img {
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+	padding: 0,0,10px,0; 
+	background: rgba(255,255,255,0.9);
+	width: 250px;
+}
+
+.pic-list li{
+	padding-bottom: 10px;
+}
+
+.picdesc {
+	position: relative;
+	height: 60px;
+	width: 250px;
+	margin: 12px;
+	bottom: 86px;
+	background:#88BBD4;
+	text-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+	opacity:0.9;
+	font-size:30px;
+	display:none;
+}
+.picdiv{
+	float:left;
+	height: 250px;
+	margin-right: 15px;
+}
+
+.picdiv:hover .picdesc{
+	display:block;
+}
+.del_child{
+	text-align: right;
+	color: black;
+	font-size: 17px;
+	text-shadow:0px 0px 0px;
+	text-decoration:underline;
+	position: absolute;
+	bottom: 0;
+	right:0;
+}
