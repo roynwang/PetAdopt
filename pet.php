@@ -74,12 +74,21 @@ echo $item['name'];
 <body>
 <!-- Codrops top bar -->
 <div class="codrops-top">
-<a href="!!!!!INPUT" target="_blank">
-WAITING YOU
+<?php
+if($editMode){
+	echo '<a href="'.'salvor.php?id='.$salvor['id'].'" target="_blank">';
+	echo '<strong>返回个人页面</strong>';
+}
+else{
+
+	echo '<a href="index.php">';
+	echo '<strong>返回主页</strong>';
+}
+?>
 </a>
 <span class="right">
 <a href="./login/logout.php" target="_blank">
-<strong>LOGOUT</strong>
+<strong>注销</strong>
 </a>
 </span>
 <div class="clr"></div>
@@ -102,6 +111,7 @@ echo $item['description']
 <div id="portfolio" class="panel">
 <div class="content">
 <h2>照片</h2>
+
 <ul id="works" class="pic-list">
 <?php
 $dir = "./photo/".$item['uid'];
@@ -110,13 +120,28 @@ foreach(getImages($dir) as $image){
 }
 ?>
 <div class="picdiv">
-<a id="add_pic" class="menubutton">新照片</a>
+<a id="add_pic" class="menubutton" onclick="addpicdial()">新照片</a>
 </div>
 <!--<li><a href="http://dribbble.com/shots/388799-Harvey-Birdman"><img src="images/portfolio_03.jpeg" width="250"></a></li>-->
 </ul>
 <!--<p class="footnote">Dribbble shots by <a href="http://dribbble.com/stuntman">Matt Kaufenberg</a>.</p>-->
 </div>
 </div>
+<div id="addpic_dial" class="menu">
+<fieldset id="child_form">
+<form method="post" >
+<p>
+<label class="menu_sublabel" >文件</label>
+</br>
+<input id="file_path" type="file" title="路径">
+</p>
+</br>
+<input id="file_submit" class="menubutton" value="确定" type="submit">
+<div id="file_result" class="menu_result"></div>
+</form>
+</fieldset>
+</div>
+
 <!-- /Portfolio -->
 
 <!-- About -->
@@ -140,26 +165,11 @@ foreach(getImages($dir) as $image){
 </div>
 <!-- /About -->
 
-<!-- Contact -->
-<div id="contact" class="panel">
-<div class="content">
-<h2>Contact</h2>
-
-<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
-<p>Pityful a rethoric question ran over her cheek, then she continued her way. On her way she met a copy.</p>
-<form id="form">
-<p><label>Your Name</label><input type="text" /></p>
-<p><label>Your Email</label><input type="text" /></p>
-<p><label>Your Message</label><textarea></textarea></p>
-</form>
-</div>
-</div>
-<!-- /Contact -->
 
 <!-- Header with Navigation -->
 <div id="header">
 <h1>
-我是</br>
+</br>
 <?php
 	echo $item['name'];
 ?>
@@ -168,7 +178,6 @@ foreach(getImages($dir) as $image){
 <li><a id="link-home" href="#home">故事</a></li>
 <li><a id="link-portfolio" href="#portfolio">照片</a></li>
 <li><a id="link-about" href="#about">救助人</a></li>
-<li><a id="link-contact" href="#contact">联系我</a></li>
 </ul>
 <div id="tosaveuid" style="display:none"><?php
 	echo $item['uid'];
@@ -197,6 +206,12 @@ echo '<script type="text/javascript">var isEdit=true;</script>';
 <script src="javascripts/jquery.js" type="text/javascript"></script> 
 <script type="text/javascript">
 
+function addpicdial(){
+	curtop = $("#add_pic").offset().top - $("#addchild_dial").height() -100;
+	curleft = $("#add_pic").offset().left - $("#addchild_dial").width()-15;
+	$("#addpic_dial").css({left:curleft, top:curtop});
+	$("#addpic_dial").fadeIn();
+}
 
 
 function editstory(){
@@ -216,9 +231,12 @@ function editstory(){
 		$("#pet_desc").html("ttt");
 		$("#pet_desc").height("auto");
 		$.post("updatepet.php",{uid:$("#tosaveuid").text(), description:desc}, function(data, status){
+			if(data == "Success")
+				location.reload(true);
+			else{
 				$("#story_result").text(data);
+				}
 			});
-
 		editStory = false;
 	}
 }
@@ -226,6 +244,16 @@ if(isEdit == false){
 	$("#add_pic").hide();
 	$("#edit_story").hide();
 }
+
+$(document).ready(
+		function(){
+		$(document).mousedown(function(e){
+			if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
+				$(".menu").fadeOut();
+			}
+		});
+
+});
 
 </script>
 </body>

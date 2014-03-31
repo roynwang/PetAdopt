@@ -19,5 +19,4 @@ else{
 	echo mysql_error();
 }
 mysql_close();
-echo $query;
 ?>

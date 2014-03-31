@@ -152,7 +152,7 @@ $(document).ready(
 				var imghtml = "<ul>";
 				for(var i in children.children){
 				var child = children.children[i];
-				imghtml = imghtml + "<div class=\"picdiv\"><li><a><img src=\"./photo/"+child.uid+"/"+child.photo + "\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\">删除</div></div></a></li></div>";
+				imghtml = imghtml + "<div class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img src=\"./photo/"+child.uid+"/"+child.photo + "\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\">删除</div></div></a></li></div>";
 				}
 				imghtml+="<div class=\"picdiv\"><a id=\"add_kid\" class=\"button\" onclick=\"funnewchild()\">添加</a></div>";
 				imghtml+="</ul>";
@@ -183,8 +183,8 @@ $(document).ready(
 				}
 				});
 		$(document).mousedown(function(e){
-			if($(e.target).parents("#addchild_menu").length==0 && $("#addchild_menu").is(':visible')){
-				$("#addchild_menu").fadeOut();
+			if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
+				$(".menu").fadeOut();
 			}
 		});
 		$("#child_submit").click(function(e){
