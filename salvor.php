@@ -86,8 +86,6 @@ echo $item['phone_0'];
 <div id="header">
 <h1>
 </br>
-个人页面</br>
-</br>
 <?php
 echo $item['display_name'];
 ?>
@@ -131,6 +129,7 @@ $(document).ready(
 		mailvalue = $("#field_mail").text();
 		$("#personal-info").click(function(e){
 			e.preventDefault();
+			$("#home").hide();
 			$("#content-title").html("个人信息");
 			$("#children-list").hide();
 			$("#info-list").show();
@@ -139,12 +138,14 @@ $(document).ready(
 			$("#field_displayname").html(displaynamevalue);
 			$("#field_qq").html(qqvalue);
 			$("#field_mobile").html(mobilevalue);
+			$("#home").fadeIn();
 			});
 		$("#children-info").click(function(e){
 			e.preventDefault();	
-
 			$("#content-title").html("孩子们");
 			$("#info-list").hide();
+			$("#home").hide();
+
 			$("#children-list").show();
 			if(children == null){
 			$.get("querychildren.php",{name:mailvalue},function(data,status){
@@ -152,7 +153,7 @@ $(document).ready(
 				var imghtml = "<ul>";
 				for(var i in children.children){
 				var child = children.children[i];
-				imghtml = imghtml + "<div class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img src=\"./photo/"+child.uid+"/"+child.photo + "\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\">删除</div></div></a></li></div>";
+				imghtml = imghtml + "<div class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" src=\"./photo/"+child.uid+"/"+child.photo + "\" title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\">删除</div></div></a></li></div>";
 				}
 				imghtml+="<div class=\"picdiv\"><a id=\"add_kid\" class=\"button\" onclick=\"funnewchild()\">添加</a></div>";
 				imghtml+="</ul>";
@@ -160,6 +161,7 @@ $(document).ready(
 				$("#children-list").html(imghtml);
 				});
 			}
+			$("#home").fadeIn();
 
 		});
 		$("#info-edit").click(function(e){
@@ -205,6 +207,7 @@ $(document).ready(
 <script>
 $(function(){
 	$("#nick_name").tipsy({gravity: 'w'});
+	$(".child_image").tipsy({gravity: 'w'});
 });
 </script>
 <?php
