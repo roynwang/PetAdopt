@@ -7,15 +7,13 @@ if(!isset($_SESSION['name'])){
 	exit();
 }
 $salvor = $_SESSION['name'];
-$name = $_POST['nickname'];
-$maxid = 3;
-
-$query ="INSERT INTO pets_table (`uid`,`name`,`salvor`) VALUES ('".$maxid."','".$name."','".$salvor."')";
+$query = "DELETE FROM `pets_table` WHERE `uid`=".$_POST['uid'];
+echo $query;
 if(mysql_query($query)){
-	echo $maxid;
+	echo "Success";
 }
 else
-	echo $query;
+	echo "Failed";
 mysql_close();
 
 ?>

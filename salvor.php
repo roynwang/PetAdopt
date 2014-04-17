@@ -60,6 +60,7 @@ WAITING YOU
 </div>
 
 <a id="children-list" class="pic-list"/>
+<p id="query_result"></p>
 <a id="info-list">
 <p id="field_mail" style="font-size:30px;margin-left:-7px"><?php 
 echo $item['id'];
@@ -121,6 +122,20 @@ function funnewchild(){
 	$("#addchild_menu").css({left:curleft, top:curtop});
 	$("#addchild_menu").fadeIn();
 }
+function delchild(){
+	url="delchild.php";
+	$.post(url, {uid:3},function(data){
+		if(data == "Success"){
+			//hidden the deteled child
+		}
+		else{
+			//show the error message
+		}
+	});
+
+}
+
+
 $(document).ready(
 		function(){
 		displaynamevalue = $("#field_displayname").text();
@@ -153,9 +168,9 @@ $(document).ready(
 				var imghtml = "<ul>";
 				for(var i in children.children){
 				var child = children.children[i];
-				imghtml = imghtml + "<div class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" src=\"./photo/"+child.uid+"/"+child.photo + "\" title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\">删除</div></div></a></li></div>";
+				imghtml = imghtml + "<div class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" src=\"./photo/"+child.uid+"/"+child.photo + "\" title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\" onClick=\"delchild()\">删除</div></div></a></li></div>";
 				}
-				imghtml+="<div class=\"picdiv\"><a id=\"add_kid\" class=\"button\" onclick=\"funnewchild()\">添加</a></div>";
+				imghtml+="<div class=\"picdiv\"><a id=\"add_kid\" class=\"button\" onClick=\"funnewchild()\">添加</a></div>";
 				imghtml+="</ul>";
 				//append button add
 				$("#children-list").html(imghtml);
@@ -198,7 +213,13 @@ $(document).ready(
 			}
 			url = "addchild.php";
 			$.post(url,{nickname:nickname}, function(data,status){
+				if(data != "Error"){
+					url = "pet.php?uid="+data + "&edit=1";
+					window.location.href = url;
+				}
+				else
 				$("#child_result").html(data);
+				
 			});
 		});
 });

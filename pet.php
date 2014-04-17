@@ -243,6 +243,7 @@ function editstory(){
 if(isEdit == false){
 	$("#add_pic").hide();
 	$("#edit_story").hide();
+	$(".del_child").hide();
 }
 
 $(document).ready(
