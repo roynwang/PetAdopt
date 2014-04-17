@@ -2,6 +2,7 @@
 require_once("consvr.php");	
 $updatestr = "";
 foreach($_POST as $key => $value){
+	$value = mysql_real_escape_string($value);
 	$updatestr .= "`";
 	$updatestr .= $key;
 	$updatestr .= "`";

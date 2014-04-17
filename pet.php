@@ -97,11 +97,9 @@ if(!$item){
 <!-- Home -->
 <div id="home" class="content">
 	<h2>故事</h2>
-	<p id="pet_desc">
-		<?php
-		echo $item['description']
-		?>
-	</p>
+	<p id="pet_desc"><?php
+	echo $item['description']
+	?></p>
 </br><p><a id="edit_story" class="menubutton" onclick="editstory()">编辑</a></p>
 <p id = "story_result"></p>
 </div>
@@ -225,10 +223,7 @@ function editstory(){
 	}
 	else{
 		desc = $("#new_desc").val();
-		desc = desc.replace(/'/g,"\\'");
-		desc = desc.replace(/"/g,'\\"');
 		$("#edit_story").text("编辑");
-		$("#pet_desc").html("ttt");
 		$("#pet_desc").height("auto");
 		$.post("updatepet.php",{uid:$("#tosaveuid").text(), description:desc}, function(data, status){
 			if(data == "Success")
