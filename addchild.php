@@ -8,14 +8,12 @@ if(!isset($_SESSION['name'])){
 }
 $salvor = $_SESSION['name'];
 $name = $_POST['nickname'];
-$maxid = 3;
 
-$query ="INSERT INTO pets_table (`uid`,`name`,`salvor`) VALUES ('".$maxid."','".$name."','".$salvor."')";
+$query ="INSERT INTO pets_table (`uid`,`name`,`salvor`) VALUES (null,'".$name."','".$salvor."')";
 if(mysql_query($query)){
-	echo $maxid;
+	echo mysql_insert_id();
 }
 else
 	echo $query;
 mysql_close();
-
 ?>
