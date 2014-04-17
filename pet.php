@@ -5,22 +5,22 @@ session_start();
 $editMode = false;
 
 function getExtension($file){
-$info = pathinfo($file);
-return $info['extension'];
+	$info = pathinfo($file);
+	return $info['extension'];
 }
 function getImages($dir){
-$images[]=NULL;
-$i = 0;
-if(false != ($handle = opendir($dir))){
-	while( false!= ($file = readdir($handle))){
-		$type = getExtension($file); 
-		if($type == "jpg" || $type == 'jpeg'){
-			$images[$i] = $dir.'/'.$file;	
-			$i++;
+	$images[]=NULL;
+	$i = 0;
+	if(false != ($handle = opendir($dir))){
+		while( false!= ($file = readdir($handle))){
+			$type = getExtension($file); 
+			if($type == "jpg" || $type == 'jpeg'){
+				$images[$i] = $dir.'/'.$file;	
+				$i++;
+			}
 		}
 	}
-}
-return $images;
+	return $images;
 }
 
 require_once("consvr.php");
@@ -45,8 +45,8 @@ if( isset($_SESSION['name']) &&
 
 
 if(!$item){
-      header('HTTP/1.1 404 Not Found');
-	  header("status: 404 Not Found");
+	header('HTTP/1.1 404 Not Found');
+	header("status: 404 Not Found");
 }
 ?>
 
@@ -57,51 +57,51 @@ if(!$item){
 <!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="~~~~~~~~~~~~~~~~" />
-<title>
-<?php
-echo $item['name'];
-?>
-</title>
-<link rel="stylesheet" type="text/css" href="css/demo.css" />
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-<link rel="stylesheet" type="text/css" href="css/piclist.css" />
-<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="~~~~~~~~~~~~~~~~" />
+	<title>
+		<?php
+		echo $item['name'];
+		?>
+	</title>
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/piclist.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 
 
 </head>
 <body>
-<!-- Codrops top bar -->
-<div class="codrops-top">
-<?php
-if($editMode){
-	echo '<a href="'.'salvor.php?id='.$salvor['id'].'" target="_blank">';
-	echo '<strong>返回个人页面</strong>';
-}
-else{
+	<!-- Codrops top bar -->
+	<div class="codrops-top">
+		<?php
+		if($editMode){
+			echo '<a href="'.'salvor.php?id='.$salvor['id'].'" target="_blank">';
+			echo '<strong>返回个人页面</strong>';
+		}
+		else{
 
-	echo '<a href="index.php">';
-	echo '<strong>返回主页</strong>';
-}
-?>
-</a>
-<span class="right">
-<a href="./login/logout.php" target="_blank">
-<strong>注销</strong>
-</a>
-</span>
-<div class="clr"></div>
+			echo '<a href="index.php">';
+			echo '<strong>返回主页</strong>';
+		}
+		?>
+	</a>
+	<span class="right">
+		<a href="./login/logout.php" target="_blank">
+			<strong>注销</strong>
+		</a>
+	</span>
+	<div class="clr"></div>
 </div><!--/ Codrops top bar -->
 
 <!-- Home -->
 <div id="home" class="content">
-<h2>故事</h2>
-<p id="pet_desc">
-<?php
-echo $item['description']
-?>
-</p>
+	<h2>故事</h2>
+	<p id="pet_desc">
+		<?php
+		echo $item['description']
+		?>
+	</p>
 </br><p><a id="edit_story" class="menubutton" onclick="editstory()">编辑</a></p>
 <p id = "story_result"></p>
 </div>
@@ -109,35 +109,35 @@ echo $item['description']
 
 <!-- Portfolio -->
 <div id="portfolio" class="panel">
-<div class="content">
-<h2>照片</h2>
+	<div class="content">
+		<h2>照片</h2>
 
-<ul id="works" class="pic-list">
-<?php
-$dir = "./photo/".$item['uid'];
-foreach(getImages($dir) as $image){
-	echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="del_child">删除</div></div></a></li></div>';
-}
-?>
-<div class="picdiv">
-<a id="add_pic" class="menubutton" onclick="addpicdial()">新照片</a>
-</div>
-<!--<li><a href="http://dribbble.com/shots/388799-Harvey-Birdman"><img src="images/portfolio_03.jpeg" width="250"></a></li>-->
-</ul>
-<!--<p class="footnote">Dribbble shots by <a href="http://dribbble.com/stuntman">Matt Kaufenberg</a>.</p>-->
-</div>
+		<ul id="works" class="pic-list">
+			<?php
+			$dir = "./photo/".$item['uid'];
+			foreach(getImages($dir) as $image){
+				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="del_child">删除</div></div></a></li></div>';
+			}
+			?>
+			<div class="picdiv">
+				<a id="add_pic" class="menubutton" onclick="addpicdial()">新照片</a>
+			</div>
+			<!--<li><a href="http://dribbble.com/shots/388799-Harvey-Birdman"><img src="images/portfolio_03.jpeg" width="250"></a></li>-->
+		</ul>
+		<!--<p class="footnote">Dribbble shots by <a href="http://dribbble.com/stuntman">Matt Kaufenberg</a>.</p>-->
+	</div>
 </div>
 <div id="addpic_dial" class="menu">
-<fieldset id="child_form">
-<form method="post" >
-<p>
-<label class="menu_sublabel" >文件</label>
-</br>
-<input id="file_path" type="file" title="路径">
-</p>
-</br>
-<input id="file_submit" class="menubutton" value="确定" type="submit">
-<div id="file_result" class="menu_result"></div>
+	<fieldset id="child_form">
+		<form method="post" >
+			<p>
+				<label class="menu_sublabel" >文件</label>
+			</br>
+			<input id="file_path" type="file" title="路径">
+		</p>
+	</br>
+	<input id="file_submit" class="menubutton" value="确定" type="submit">
+	<div id="file_result" class="menu_result"></div>
 </form>
 </fieldset>
 </div>
@@ -146,41 +146,41 @@ foreach(getImages($dir) as $image){
 
 <!-- About -->
 <div id="about" class="panel">
-<div class="content">
-<h2>
-<?php
-	echo $salvor['display_name'];
-?>
+	<div class="content">
+		<h2>
+			<?php
+			echo $salvor['display_name'];
+			?>
 
-</h2>
-<!--- Contact infomation-->
-<p>QQ:
-<?php
-	echo $salvor['QQ'];
-?>
-</p>
-<p></p>
-<p></p>
-</div>
+		</h2>
+		<!--- Contact infomation-->
+		<p>QQ:
+			<?php
+			echo $salvor['QQ'];
+			?>
+		</p>
+		<p></p>
+		<p></p>
+	</div>
 </div>
 <!-- /About -->
 
 
 <!-- Header with Navigation -->
 <div id="header">
-<h1>
-</br>
-<?php
+	<h1>
+	</br>
+	<?php
 	echo $item['name'];
-?>
+	?>
 </h1>
 <ul id="navigation">
-<li><a id="link-home" href="#home">故事</a></li>
-<li><a id="link-portfolio" href="#portfolio">照片</a></li>
-<li><a id="link-about" href="#about">救助人</a></li>
+	<li><a id="link-home" href="#home">故事</a></li>
+	<li><a id="link-portfolio" href="#portfolio">照片</a></li>
+	<li><a id="link-about" href="#about">救助人</a></li>
 </ul>
 <div id="tosaveuid" style="display:none"><?php
-	echo $item['uid'];
+echo $item['uid'];
 ?>
 </div>
 <!-- disable Nav -->
@@ -198,9 +198,9 @@ var editStory = false;
 
 
 <?php
-	if($editMode){
-echo '<script type="text/javascript">var isEdit=true;</script>';
-	}
+if($editMode){
+	echo '<script type="text/javascript">var isEdit=true;</script>';
+}
 ?>
 
 <script src="javascripts/jquery.js" type="text/javascript"></script> 
@@ -235,8 +235,8 @@ function editstory(){
 				location.reload(true);
 			else{
 				$("#story_result").text(data);
-				}
-			});
+			}
+		});
 		editStory = false;
 	}
 }
@@ -247,14 +247,14 @@ if(isEdit == false){
 }
 
 $(document).ready(
-		function(){
+	function(){
 		$(document).mousedown(function(e){
 			if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
 				$(".menu").fadeOut();
 			}
 		});
 
-});
+	});
 
 </script>
 </body>
