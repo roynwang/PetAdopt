@@ -8,7 +8,6 @@ if(!isset($_SESSION['name'])){
 }
 $salvor = $_SESSION['name'];
 $query = "DELETE FROM `pets_table` WHERE `uid`=".$_POST['uid'];
-echo $query;
 if(mysql_query($query)){
 	echo "Success";
 }
