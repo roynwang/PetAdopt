@@ -97,10 +97,15 @@ if(!$item){
 <!-- Home -->
 <div id="home" class="content">
 	<h2>故事</h2>
-	<p id="pet_desc"><?php
-	echo $item['description']
-	?></p>
-</br><p><a id="edit_story" class="menubutton" onclick="editstory()">编辑</a></p>
+	<p id="pet_desc"><textarea id="new_desc"><?php
+	echo $item['description'];
+	?></textarea><a id="txt_desc"><?php
+	$str = str_replace('　', ' ', $item['description']);
+	$str =str_replace("\n","<br>",$str);
+	$str =str_replace(" ", "&nbsp;",$str);
+	echo $str;
+	?></a></p>
+</br><p><a id="edit_story" class="button" onclick="editstory()">编辑</a></p>
 <p id = "story_result"></p>
 </div>
 <!-- /Home -->
@@ -113,8 +118,12 @@ if(!$item){
 		<ul id="works" class="pic-list">
 			<?php
 			$dir = "./photo/".$item['uid'];
+			$del_html = "";
+			if(isEdit){
+				$del_html = '<div class="del_child">删除</div>';
+			}
 			foreach(getImages($dir) as $image){
-				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="del_child">删除</div></div></a></li></div>';
+				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="left_desc">设为封面</div>'.$del_html.'</div></a></li></div>';
 			}
 			?>
 			<div class="picdiv">
@@ -217,7 +226,8 @@ function editstory(){
 		if($("#pet_desc").height() < 300){
 			$("#pet_desc").height(300);
 		}
-		$("#pet_desc").html('<textarea id="new_desc">'+$("#pet_desc").text()+'</textarea>');
+		$("#txt_desc").hide();
+		$("#new_desc").fadeIn();
 		$("#edit_story").text("提交");
 		editStory = true;
 	}
@@ -243,6 +253,7 @@ if(isEdit == false){
 
 $(document).ready(
 	function(){
+		$("#new_desc").hide();
 		$(document).mousedown(function(e){
 			if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
 				$(".menu").fadeOut();
