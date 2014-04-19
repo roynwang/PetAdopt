@@ -6,6 +6,12 @@ body {
 	background: #88BBD4;
 	overflow: auto;
 }
+.avator {
+	height: 60px;
+	width: 60px;
+	border-radius: 60px;
+}
+
 .infolist{
 	font-size: 25px;
 	font-weight: 400;

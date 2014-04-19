@@ -123,7 +123,8 @@ if(!$item){
 				$del_html = '<div class="del_child">删除</div>';
 			}
 			foreach(getImages($dir) as $image){
-				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="left_desc">设为封面</div>'.$del_html.'</div></a></li></div>';
+				$filename = trim(basename($image));
+				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="left_desc" onClick=set_cover("'.$filename.'")>设为封面</div>'.$del_html.'</div></a></li></div>';
 			}
 			?>
 			<div class="picdiv">
@@ -176,8 +177,8 @@ if(!$item){
 <!-- Header with Navigation -->
 <div id="header">
 	<h1>
-	</br>
 	<?php
+	echo '<img id="petavator" class="avator"  src="./photo/'.$item['uid']."/".$item['photo'].'">';
 	echo $item['name'];
 	?>
 </h1>
@@ -218,6 +219,20 @@ function addpicdial(){
 	curleft = $("#add_pic").offset().left - $("#addchild_dial").width()-15;
 	$("#addpic_dial").css({left:curleft, top:curtop});
 	$("#addpic_dial").fadeIn();
+}
+
+function set_cover(imgname){
+	$.post("updatepet.php",{uid:$("#tosaveuid").text(),photo:imgname},function(data,status){
+		if(data == "Success"){
+			ori = $("#petavator").attr("src");
+			cur = ori.replace(/[^\/]*$/,imgname);
+			$("#petavator").attr("src",cur);
+		}
+		else{
+			alert("Set cover failed");
+		}
+	}
+)
 }
 
 
