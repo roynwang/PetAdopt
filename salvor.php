@@ -227,14 +227,14 @@ $(document).ready(
 });
 </script>
 <script src="javascripts/jquery.tipsy.js" type="text/javascript"></script> 
-<script>
+<script type="text/javascript">
 $(function(){
 	$("#nick_name").tipsy({gravity: 'w'});
 	$(".child_image").tipsy({gravity: 'w'});
 });
 </script>
 <?php
-if($_GET['edit'] == 1){
+if(array_key_exists("edit",$_GET) && $_GET['edit'] == 1){
 	echo "<script type=\"text/javascript\"> $(document).ready(function(){switchToEdit();})</script>";
 }
 ?>

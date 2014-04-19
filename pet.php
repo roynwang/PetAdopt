@@ -37,6 +37,7 @@ mysql_close();
 $editMode = false;
 if( isset($_SESSION['name']) &&
 	$_SESSION['name'] == $item['salvor'] &&
+    array_key_exists("edit",$_GET) &&
 	$_GET['edit'] == '1'
 	){
 	$editMode = true;
@@ -55,7 +56,15 @@ if(!$item){
 <!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
 <!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
-
+<script type="text/javascript">
+var isEdit = false;
+var editStory = false;
+</script>
+<?php
+if($editMode){
+	echo '<script type="text/javascript">isEdit=true;</script>';
+}
+?>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="~~~~~~~~~~~~~~~~" />
@@ -114,12 +123,11 @@ if(!$item){
 <div id="portfolio" class="panel">
 	<div class="content">
 		<h2>照片</h2>
-
 		<ul id="works" class="pic-list">
 			<?php
 			$dir = "./photo/".$item['uid'];
 			$del_html = "";
-			if(isEdit){
+			if($editMode){
 				$del_html = '<div class="del_child">删除</div>';
 			}
 			foreach(getImages($dir) as $image){
@@ -199,17 +207,7 @@ echo $item['uid'];
 </nav>-->
 </div>
 
-<script type="text/javascript">
-var isEdit = false;
-var editStory = false;
-</script>
 
-
-<?php
-if($editMode){
-	echo '<script type="text/javascript">var isEdit=true;</script>';
-}
-?>
 
 <script src="javascripts/jquery.js" type="text/javascript"></script> 
 <script type="text/javascript">
