@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 17, 2014 at 11:27 PM
+-- Generation Time: Apr 23, 2014 at 12:17 AM
 -- Server version: 5.5.35
 -- PHP Version: 5.5.9-1+sury.org~precise+1
 
@@ -23,6 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `headline_table`
+--
+
+CREATE TABLE IF NOT EXISTS `headline_table` (
+  `sn` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`sn`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `headline_table`
+--
+
+INSERT INTO `headline_table` (`sn`, `uid`, `time`) VALUES
+(1, 1, '2014-04-22 14:15:22'),
+(2, 2, '2014-04-22 14:16:07'),
+(3, 3, '2014-04-22 14:16:23');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pets_table`
 --
 
@@ -36,20 +58,17 @@ CREATE TABLE IF NOT EXISTS `pets_table` (
   `tag` mediumtext NOT NULL,
   `salvor` varchar(40) NOT NULL,
   UNIQUE KEY `Main` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='All pets information' AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='All pets information' AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `pets_table`
 --
 
 INSERT INTO `pets_table` (`uid`, `name`, `species`, `sex`, `description`, `photo`, `tag`, `salvor`) VALUES
-(1, '三毛', 0, 0, 'Now I can edit the story.', '6798453217_72dea2d06e_m.jpg', 'tag1,tag2,tag3', 'roynwang@live.cn'),
-(2, 'Echo', 1, 1, 'My name is Echo', '6791628438_affaa19e10_m.jpg', 'tag3,tag4', 'roynwang@live.cn'),
-(3, 'Hello', 0, 0, '', '', '', 'roynwang@live.cn'),
-(4, 'world', 0, 0, '', '', '', 'roynwang@live.cn'),
-(5, 'you', 0, 0, '', '', '', 'roynwang@live.cn'),
-(6, 'love', 0, 0, '', '', '', 'roynwang@live.cn'),
-(7, 'another', 0, 0, 'just for test', '', '', 'roynwang@live.cn');
+(1, '三毛', 0, 0, 'Now I can edit the story.\nhello\n  !!!             我是三毛!!!\nThanks,\nRenyuan', '6806687375_07d2b7a1f9_m.jpg', 'tag1,tag2,tag3', 'roynwang@live.cn'),
+(2, 'Echo', 1, 1, 'My name is Echo	''\nSection 2\nddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\ndfdf											', 'portfolio_01.jpeg', 'tag3,tag4', 'roynwang@live.cn'),
+(3, 'Hello', 0, 0, 'test', '6812090617_5fd5bbdda0_m.jpg', '', 'roynwang@live.cn'),
+(4, 'test', 0, 0, '', '', '', 'roynwang@live.cn');
 
 -- --------------------------------------------------------
 
