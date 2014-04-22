@@ -170,7 +170,12 @@ $(document).ready(
 				var imghtml = "<ul>";
 				for(var i in children.children){
 				var child = children.children[i];
-				imghtml = imghtml + "<div id=\"child"+child.uid+"\" class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" src=\"./photo/"+child.uid+"/"+child.photo + "\" title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\" onClick=\"delchild("+child.uid+")\">删除</div></div></a></li></div>";
+				// there should be an empty image
+				var imgsrc= 'src=""';
+				if(child.photo!==null || child.photo.length !==0){
+					imgsrc='src="./photo/'+child.uid+'/'+child.photo+'"';
+				}
+				imghtml = imghtml + "<div id=\"child"+child.uid+"\" class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" " + imgsrc + " title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\" onClick=\"delchild("+child.uid+")\">删除</div></div></a></li></div>";
 				}
 				imghtml+="<div class=\"picdiv\"><a id=\"add_kid\" class=\"button\" onClick=\"funnewchild()\">添加</a></div>";
 				imghtml+="</ul>";
