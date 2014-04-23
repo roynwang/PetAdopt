@@ -58,6 +58,11 @@ body {
   height: 500px;
 }
 
+.col-lg-4 .img-circle{
+	border-radius: 70px;
+	height:140px;
+	width:140px;
+}
 
 
 /* MARKETING CONTENT

@@ -126,13 +126,13 @@ if($editMode){
 		<ul id="works" class="pic-list">
 			<?php
 			$dir = "./photo/".$item['uid'];
-			$del_html = "";
+			$desc_html = "";
 			if($editMode){
-				$del_html = '<div class="del_child">删除</div>';
+				$desc_html = '<div class="picdesc"><div class="left_desc" onClick=set_cover("'.$filename.'")>设为封面</div><div class="del_child">删除</div></div>';
 			}
 			foreach(getImages($dir) as $image){
 				$filename = trim(basename($image));
-				echo '<div class="picdiv"><li><a><img src= "'.$image.'"><div class="picdesc"><div class="left_desc" onClick=set_cover("'.$filename.'")>设为封面</div>'.$del_html.'</div></a></li></div>';
+				echo '<div class="picdiv"><li><a><img src= "'.$image.'">'.$desc_html.'</a></li></div>';
 			}
 			?>
 			<div class="picdiv">

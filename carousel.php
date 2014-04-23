@@ -137,26 +137,16 @@ $children = $ret->children;
 
 		<!-- Three columns of text below the carousel -->
 		<div class="row">
-			<div class="col-lg-4">
-				<?php
-				echo '<img class="img-circle" src="./photo/1/'.$children[0]->photo.'" data-src="holder.js/140x140" alt="Generic placeholder image">';
-				echo '<h2>'.$children[0]->uid.'</h2>';
-				echo '<p>'.$children[0]->description.'</p>';
-				?>
-				<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-			</div><!-- /.col-lg-4 -->
-			<div class="col-lg-4">
-				<img class="img-circle" data-src="holder.js/140x140" alt="Generic placeholder image">
-				<h2>Heading</h2>
-				<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-				<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-			</div><!-- /.col-lg-4 -->
-			<div class="col-lg-4">
-				<img class="img-circle" data-src="holder.js/140x140" alt="Generic placeholder image">
-				<h2>Heading</h2>
-				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-				<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-			</div><!-- /.col-lg-4 -->
+<?php
+	foreach($children as $child){
+			echo '<div class="col-lg-4">';
+				echo '<img class="img-circle" src="./photo/'.$child->uid.'/'.$child->photo.'"  alt="Generic placeholder image">';
+				echo '<h2>'.$child->name.'</h2>';
+				echo '<p>'.$child->description.'</p>';
+				echo '<p><a class="btn btn-default" href="pet.php?uid='.$child->uid.'" role="button">详情 &raquo;</a></p>';
+			echo '</div><!-- /.col-lg-4 -->';
+			}
+?>
 		</div><!-- /.row -->
 
 
