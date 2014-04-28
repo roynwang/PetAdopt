@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2014 at 12:17 AM
+-- Generation Time: Apr 28, 2014 at 11:06 PM
 -- Server version: 5.5.35
 -- PHP Version: 5.5.9-1+sury.org~precise+1
 
@@ -57,8 +57,10 @@ CREATE TABLE IF NOT EXISTS `pets_table` (
   `photo` mediumtext NOT NULL,
   `tag` mediumtext NOT NULL,
   `salvor` varchar(40) NOT NULL,
-  UNIQUE KEY `Main` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='All pets information' AUTO_INCREMENT=5 ;
+  UNIQUE KEY `Main` (`uid`),
+  FULLTEXT KEY `description` (`description`),
+  FULLTEXT KEY `name` (`name`,`description`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='All pets information' AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `pets_table`
