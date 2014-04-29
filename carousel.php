@@ -47,39 +47,52 @@ $children = $ret->children;
 	<body>
 		<div class="navbar-wrapper">
 			<div class="container">
-				<div class="navbar navbar-default navbar-static-top" role="navigation">
-					<div class="container">
+				<div class="row">
+					<div class="navbar navbar-inverse" role="navigation">
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="#">Project name</a>
+							<a class="navbar-brand" rel="home" title="Buy Sell Rent Everyting">Classified</a>
 						</div>
-						<div class="navbar-collapse collapse">
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="#">Home</a></li>
-								<li><a href="#about">About</a></li>
-								<li><a href="#contact">Contact</a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li class="divider"></li>
-										<li class="dropdown-header">Nav header</li>
-										<li><a href="#">Separated link</a></li>
-										<li><a href="#">One more separated link</a></li>
-									</ul>
-								</li>
+						<div class="collapse navbar-collapse navbar-ex1-collapse">
+							<div class="col-sm-6 col-md-6">
+								<form class="navbar-form" role="search" method="get" id="search-form" name="search-form">
+									<div class="btn-group pull-left" style="margin-right:10px;">
+										<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Mumbai <span class="caret"></span></a>
+										<div class="dropdown-menu multi">
+											<div class="container">
+												<div class="row">
+													<div class="col-lg-4">
+														<ul class="dropdown-menu"><li><a href="#"><strong>Mumbai</strong></a></li></ul>
+													</div>
+												</div>
+											</div>
+										</div>		
+									</div>
+									<div class="input-group">
+										<input type="text" class="form-control" placeholder="2 BHK Flat, Pune Real Estate, Pest Control..." id="query" name="query" value="">
+										<div class="input-group-btn">
+											<button type="submit" class="btn btn-success"><span>Test</span></button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="col-sm-2 col-md-2">
+								<form class="navbar-form navbar-right" role="search">
+									<div class="input-group"><a href="#" class="btn btn-warning">Post Your Ads</a></div>
+								</form>
+							</div>
+							<ul class="nav navbar-nav navbar-right">
+								<li><a data-toggle="modal" href="#" data-target="#">Login</a></li>
+								<li><a data-toggle="modal" href="#" data-target="#">Register</a></li>
 							</ul>
 						</div>
-					</div>
-				</div>
-
+					</div>				
+				</div>	
 			</div>
 		</div>
 
@@ -136,18 +149,24 @@ $children = $ret->children;
 	<div class="container marketing">
 
 		<!-- Three columns of text below the carousel -->
+		<div class="carousel slide" id="welcome-carousel" data-ride="carousel">
 		<div class="row">
-<?php
-	foreach($children as $child){
-			echo '<div class="col-lg-4">';
+			<?php
+			foreach($children as $child){
+				echo '<div class="col-lg-4">';
 				echo '<img class="img-circle" src="./photo/'.$child->uid.'/'.$child->photo.'"  alt="Generic placeholder image">';
 				echo '<h2>'.$child->name.'</h2>';
-				echo '<p>'.$child->description.'</p>';
+			//echo '<p>'.$child->description.'</p>';
 				echo '<p><a class="btn btn-default" href="pet.php?uid='.$child->uid.'" role="button">详情 &raquo;</a></p>';
-			echo '</div><!-- /.col-lg-4 -->';
+				echo '</div><!-- /.col-lg-4 -->';
 			}
-?>
+			?>
+
 		</div><!-- /.row -->
+
+			<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+	        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
 
 
 		<!-- START THE FEATURETTES -->
