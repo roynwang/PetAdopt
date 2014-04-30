@@ -41,58 +41,21 @@ $children = $ret->children;
 
 <!-- Custom styles for this template -->
 <link href="css/carousel.css" rel="stylesheet">
+<link href="css/mainpage.css" rel="stylesheet">
 </head>
 <!-- NAVBAR
 	================================================== -->
 	<body>
-		<div class="navbar-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="navbar navbar-inverse" role="navigation">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" rel="home" title="Buy Sell Rent Everyting">Classified</a>
-						</div>
-						<div class="collapse navbar-collapse navbar-ex1-collapse">
-							<div class="col-sm-6 col-md-6">
-								<form class="navbar-form" role="search" method="get" id="search-form" name="search-form">
-									<div class="btn-group pull-left" style="margin-right:10px;">
-										<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Mumbai <span class="caret"></span></a>
-										<div class="dropdown-menu multi">
-											<div class="container">
-												<div class="row">
-													<div class="col-lg-4">
-														<ul class="dropdown-menu"><li><a href="#"><strong>Mumbai</strong></a></li></ul>
-													</div>
-												</div>
-											</div>
-										</div>		
-									</div>
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="2 BHK Flat, Pune Real Estate, Pest Control..." id="query" name="query" value="">
-										<div class="input-group-btn">
-											<button type="submit" class="btn btn-success"><span>Test</span></button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div class="col-sm-2 col-md-2">
-								<form class="navbar-form navbar-right" role="search">
-									<div class="input-group"><a href="#" class="btn btn-warning">Post Your Ads</a></div>
-								</form>
-							</div>
-							<ul class="nav navbar-nav navbar-right">
-								<li><a data-toggle="modal" href="#" data-target="#">Login</a></li>
-								<li><a data-toggle="modal" href="#" data-target="#">Register</a></li>
-							</ul>
-						</div>
-					</div>				
-				</div>	
+		<div class="navbar">
+			<div class="navbar-inner"  id="main-nav">
+				<div class="container"  >
+					<ul class="nav nav-pills" >
+						<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
+						<li><a href="#">首页</a></li>
+						<li><a href="#">汪们</a></li>
+						<li><a href="#">喵们</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 

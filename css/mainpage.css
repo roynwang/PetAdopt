@@ -1,0 +1,34 @@
+#main-nav {
+	background-color: #D8EFFA;
+	height: 80px;
+}
+#main-nav ul{
+	height:80px;
+}
+#main-nav .container{
+	padding:0;
+}
+#main-nav .container ul li {
+	height:80px;
+	line-height:80px;
+	margin-left:0;
+}
+#main-nav a{
+	font-size: 20px;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-right: 30px;
+	padding-left: 30px;
+	color:#4682B4;
+}
+
+#main-nav a:hover{
+	background-color: #88BBD4;
+	color:white;
+}
+
+#main-nav img{
+	height: 80px;
+	margin-top:-3px;
+}
+
