@@ -47,14 +47,27 @@ $children = $ret->children;
 	================================================== -->
 	<body>
 		<div class="navbar">
-			<div class="navbar-inner"  id="main-nav">
+			<div class="navbar-inner main-nav">
 				<div class="container"  >
-					<ul class="nav nav-pills" >
+					<ul class="nav nav-pills nav-item" >
 						<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
 						<li><a href="#">首页</a></li>
 						<li><a href="#">汪们</a></li>
 						<li><a href="#">喵们</a></li>
+						<li class="pull-right ">
+							<form class="form-search form-inline">
+								<div class="input-append">
+									<input type="text" class="form-control">
+									<button type="submit" class="btn"> <span class="glyphicon glyphicon-search"></span></button>
+								</div>
+							</form>
+						</li>
 					</ul>
+
+					<!--<div class="input-group searchbar">
+								<input type="text" class="form-control">
+								<span class="input-group-addon">.00</span>
+							</div>-->	
 				</div>
 			</div>
 		</div>
@@ -92,7 +105,8 @@ $children = $ret->children;
 <div class="container">
 <div class="carousel-caption">
 <h1>One more for good measure.</h1>
-<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+<p>Cras justo odio, dapibus >
+ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
 </div>
 </div>
@@ -112,76 +126,77 @@ $children = $ret->children;
 	<div class="container marketing">
 
 		<!-- Three columns of text below the carousel -->
-		<div class="carousel slide" id="welcome-carousel" data-ride="carousel">
-		<div class="row">
-			<?php
-			foreach($children as $child){
-				echo '<div class="col-lg-4">';
-				echo '<img class="img-circle" src="./photo/'.$child->uid.'/'.$child->photo.'"  alt="Generic placeholder image">';
-				echo '<h2>'.$child->name.'</h2>';
+		<div class="carousel slide" id="main-slide" data-ride="carousel">
+			<div class="row">
+				<?php
+				foreach($children as $child){
+					echo '<div class="col-lg-4">';
+					echo '<img class="img-circle" src="./photo/'.$child->uid.'/'.$child->photo.'"  alt="Generic placeholder image">';
+					echo '<h2>'.$child->name.'</h2>';
 			//echo '<p>'.$child->description.'</p>';
-				echo '<p><a class="btn btn-default" href="pet.php?uid='.$child->uid.'" role="button">详情 &raquo;</a></p>';
-				echo '</div><!-- /.col-lg-4 -->';
-			}
-			?>
+					echo '<p><a class="btn btn-default" href="pet.php?uid='.$child->uid.'" role="button">详情 &raquo;</a></p>';
+					echo '</div><!-- /.col-lg-4 -->';
+				}
+				?>
 
-		</div><!-- /.row -->
-
+			</div><!-- /.row -->
+<!--temp remove the arrow
 			<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 	        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	    -->
+	</div>
+
+
+	<!-- START THE FEATURETTES -->
+
+	<hr class="featurette-divider">
+
+	<div class="row featurette">
+		<div class="col-md-7">
+			<h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
 		</div>
-
-
-		<!-- START THE FEATURETTES -->
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7">
-				<h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-			<div class="col-md-5">
-				<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-			</div>
+		<div class="col-md-5">
+			<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
 		</div>
+	</div>
 
-		<hr class="featurette-divider">
+	<hr class="featurette-divider">
 
-		<div class="row featurette">
-			<div class="col-md-5">
-				<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-			</div>
-			<div class="col-md-7">
-				<h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
+	<div class="row featurette">
+		<div class="col-md-5">
+			<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
 		</div>
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7">
-				<h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-			<div class="col-md-5">
-				<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-			</div>
+		<div class="col-md-7">
+			<h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
 		</div>
+	</div>
 
-		<hr class="featurette-divider">
+	<hr class="featurette-divider">
 
-		<!-- /END THE FEATURETTES -->
+	<div class="row featurette">
+		<div class="col-md-7">
+			<h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+			<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+		</div>
+		<div class="col-md-5">
+			<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+		</div>
+	</div>
+
+	<hr class="featurette-divider">
+
+	<!-- /END THE FEATURETTES -->
 
 
-		<!-- FOOTER -->
-		<footer>
-			<p class="pull-right"><a href="#">Back to top</a></p>
-			<p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-		</footer>
+	<!-- FOOTER -->
+	<footer>
+		<p class="pull-right"><a href="#">Back to top</a></p>
+		<p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+	</footer>
 
-	</div><!-- /.container -->
+</div><!-- /.container -->
 
 
 <!-- Bootstrap core JavaScript

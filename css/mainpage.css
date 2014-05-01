@@ -1,19 +1,19 @@
-#main-nav {
+.main-nav {
 	background-color: #D8EFFA;
 	height: 80px;
 }
-#main-nav ul{
+.main-nav ul{
 	height:80px;
 }
-#main-nav .container{
+.main-nav .container{
 	padding:0;
 }
-#main-nav .container ul li {
+.main-nav .container ul li {
 	height:80px;
 	line-height:80px;
 	margin-left:0;
 }
-#main-nav a{
+.main-nav div ul li a{
 	font-size: 20px;
 	padding-top: 0;
 	padding-bottom: 0;
@@ -22,13 +22,27 @@
 	color:#4682B4;
 }
 
-#main-nav a:hover{
+.main-nav div ul li a:hover{
 	background-color: #88BBD4;
 	color:white;
 }
 
-#main-nav img{
+.main-nav img{
 	height: 80px;
 	margin-top:-3px;
 }
+
+#main-slide {
+	/*background-color: #D8EFFA;*/
+	background-color:white;
+	margin-bottom: 0;
+	background-image: none;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.searchbar {
+	width: 30%;
+}
+
 
