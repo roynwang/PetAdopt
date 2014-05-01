@@ -46,10 +46,34 @@ $children = $ret->children;
 <!-- NAVBAR
 	================================================== -->
 	<body>
+		<nav class="navbar main-nav" role="navigation">
+			<div class="container">
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav nav-item">
+						<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
+						<li><a href="#">首页</a></li>
+						<li><a href="#">汪们</a></li>
+						<li><a href="#">喵们</a></li>
+					</ul>
+				</li>
+			</ul>
+			<form class="navbar-form navbar-right">
+				<div class="form-group">
+					<input id="querytext" type="text" placeholder="搜索" class="form-control">
+				</div>
+				<button id="searchbtn" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+			</form>
+		</div><!--/.navbar-collapse -->
+	</div>
+</nav>
+
+
+
+<!--
 		<div class="navbar">
 			<div class="navbar-inner main-nav">
 				<div class="container"  >
-					<ul class="nav nav-pills nav-item" >
+					<ul class="nav nav-item" >
 						<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
 						<li><a href="#">首页</a></li>
 						<li><a href="#">汪们</a></li>
@@ -64,13 +88,11 @@ $children = $ret->children;
 						</li>
 					</ul>
 
-					<!--<div class="input-group searchbar">
-								<input type="text" class="form-control">
-								<span class="input-group-addon">.00</span>
-							</div>-->	
+					
 				</div>
 			</div>
 		</div>
+	-->
 
 <!--
 <div id="myCarousel" class="carousel slide" data-ride="carousel">

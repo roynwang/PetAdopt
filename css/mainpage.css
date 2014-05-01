@@ -2,7 +2,7 @@
 	background-color: #D8EFFA;
 	height: 80px;
 }
-.main-nav ul{
+.main-nav .container ul{
 	height:80px;
 }
 .main-nav .container{
@@ -13,16 +13,18 @@
 	line-height:80px;
 	margin-left:0;
 }
-.main-nav div ul li a{
+.main-nav div div ul li a{
 	font-size: 20px;
 	padding-top: 0;
 	padding-bottom: 0;
 	padding-right: 30px;
 	padding-left: 30px;
 	color:#4682B4;
+	height: inherit;
+	line-height: inherit;
 }
 
-.main-nav div ul li a:hover{
+.main-nav div div ul li a:hover{
 	background-color: #88BBD4;
 	color:white;
 }
@@ -30,6 +32,18 @@
 .main-nav img{
 	height: 80px;
 	margin-top:-3px;
+}
+
+.main-nav form{
+	height:80px;
+}
+.form-group {
+	height: 80px;
+}
+#querytext {
+	margin-top: 27px;
+	width: 250px;
+
 }
 
 #main-slide {
@@ -41,8 +55,8 @@
 	padding-right: 0;
 }
 
-.searchbar {
-	width: 30%;
+#searchbtn {
+	margin-left: -30px
 }
 
 
