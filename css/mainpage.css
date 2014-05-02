@@ -1,6 +1,7 @@
 .main-nav {
 	background-color: #D8EFFA;
 	height: 80px;
+	border: 0;
 }
 .main-nav .container ul{
 	height:80px;
@@ -43,7 +44,6 @@
 #querytext {
 	margin-top: 27px;
 	width: 250px;
-
 }
 
 #main-slide {
@@ -56,7 +56,27 @@
 }
 
 #searchbtn {
-	margin-left: -30px
+	margin-left: -30px;
+	margin-top: 27px;
+	vertical-align: top;
+	height: 26px;
 }
 
+.img-searchresult {
+	width : 300px;
+	height: 200px;
+	
+}
+
+.thumbnail-searchresult{
+	display: block;
+	padding: 4px;
+	margin-bottom: 20px;
+	line-height: 1.42857143;
+	background-color: white;
+	border: 1px solid #DDD;
+	border-radius: 4px;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
 
