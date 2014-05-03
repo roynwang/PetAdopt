@@ -72,4 +72,14 @@
 	margin-top: 80px;
 }
 
+.pager li a{
+	border:none;
+	font-size:20px;
+	color:steelBlue;
+	background-color: #D8EFFA;
+}
+.pager li a:hover {
+	background-color: #88BBD4;
+	color:white;
+}
 

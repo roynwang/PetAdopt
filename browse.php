@@ -4,7 +4,6 @@ $offset = 0;
 $page=0;
 $keywords="";
 if(isset($_GET["keywords"])){
-
 $keywords=$_GET["keywords"];
 //$keywords=iconv("gbk","utf-8",$keywords);
 //echo "$keywords~~~~";
@@ -15,11 +14,7 @@ exit;
 if(isset($_GET["page"])){
 $page = $_GET["page"];
 }
-
-
-
 $offset = $page*15;
-
 ob_start();
 $count=15;
 require_once("search.php");
@@ -101,17 +96,32 @@ $count = $ret->count;
 
 			?>
 		</div>
-		<div class="container">
-			<ul class="pagination">
-				<li><a href="#">Prev</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">Next</a></li>
-			</ul>
-		</div>
+		<ul class="pager">  
+			<li>
+				<?php 
+				if($page!=0){
+				$params = "";
+				$params.="keywords=";
+				$params.=$keywords;
+				$params.="&page=";
+				$params.=($page-1);
+				echo '<a href="browse.php?'.$params.'">上一页</a>';
+				}
+				?> 
+			</li>  
+			<li>  
+				<?php
+				if($count==4){
+				$params = "";
+				$params.="keywords=";
+				$params.=$keywords;
+				$params.="&page=";
+				$params.=($page+1);
+				echo '<a href="browse.php?'.$params.'">下一页</a>';
+				}
+				?>
+			</li>  
+		</ul>  
 
 		<div class="container">
 			<!-- FOOTER -->

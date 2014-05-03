@@ -1,7 +1,7 @@
 <?php
 require_once("consvr.php");
 $limit = ";";
-$query = "SELECT * FROM pets_table WHERE MATCH (name, description) AGAINST ($keywords IN BOOLEAN MODE) ";
+$query = "SELECT * FROM pets_table WHERE MATCH (name, description) AGAINST ('$keywords' IN BOOLEAN MODE) ";
 if("猫"== $keywords."" || $keywords == "1"){
 	$query = "SELECT * FROM pets_table WHERE species = 1 ";
 }
