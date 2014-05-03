@@ -4,10 +4,13 @@ $offset = 0;
 $page=0;
 $keywords="";
 if(isset($_GET["keywords"])){
-	$keywords=$_GET["keywords"];
+
+$keywords=$_GET["keywords"];
+//$keywords=iconv("gbk","utf-8",$keywords);
+//echo "$keywords~~~~";
 }
 else{
-	exit;
+exit;
 }
 if(isset($_GET["page"])){
 $page = $_GET["page"];
@@ -24,7 +27,7 @@ $ret = ob_get_contents();
 ob_end_clean();
 $ret = json_decode($ret);
 if($ret->msg != "Success"){
-	exit;
+exit;
 }
 $children = $ret->children;
 $count = $ret->count;
@@ -65,41 +68,35 @@ $count = $ret->count;
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav nav-item">
 					<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
-					<li><a href="#">首页</a></li>
-					<li><a href="#">汪们</a></li>
-					<li><a href="#">喵们</a></li>
-					<li class="pull-right"><a href="#">救助人入口</a></li>
+					<li><a href="index.php">首页</a></li>
+					<li><a href="browse.php?keywords=0">汪们</a></li>
+					<li><a href="browse.php?keywords=1">喵们</a></li>
+					<li class="pull-right"><a href="login.php">救助人入口</a></li>
 				</ul>
-				<form class="navbar-form navbar-right">
+				<form class="navbar-form navbar-right" action="browse.php" method="get">
 					<div class="form-group">
-						<input id="querytext" type="text" placeholder="搜一下..." class="form-control">
+						<input id="querytext" type="text" placeholder="搜一下..." class="form-control" accept-charset="utf-8" name="keywords">
 					</div>
 					<button id="searchbtn" type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
 				</form>
 			</div><!--/.navbar-collapse -->
 		</div>
 		</nav>
-		<div class="container">
+		<div class="container" id="result-container">
 			<?php 	
 			for($i=0; $i<$count;$i++){
 			$child = $children[$i];
-			if($i%3 == 0){
-			echo '<div class="row">';
-			}
 			echo ' <div class="col-sm-6 col-md-4">
-					<div class="thumbnail thumbnail-searchresult">
-						<img src="./photo/'.$child->uid.'/'.$child->photo.'" alt="..." class="img-searchresult">
-						<div class="caption">
-							<h3>'.$child->name.'</h3>
-							<p>...</p>
-							<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-						</div>
+				<div class="thumbnail thumbnail-searchresult">
+					<img src="./photo/'.$child->uid.'/'.$child->photo.'" alt="..." class="img-searchresult">
+					<div class="caption">
+						<h3>'.$child->name.'</h3>
+						<p>...</p>
+						<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
 					</div>
-				</div>';
+				</div>
+			</div>';
 
-			if($i%3 == 2 || $i==$count-1){
-				echo '</div>';
-			}
 			}
 
 			?>
@@ -128,8 +125,18 @@ $count = $ret->count;
 		<script src="javascripts/jquery-1.8.2.min.js"></script>
 		<script src="javascripts/bootstrap.min.js"></script>
 		<script src="javascripts/docs.min.js"></script>
-	
-	</body>
-</body>
-<html>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+					$('.thumbnail img').css({
+						'height': $('.thumbnail img').height(),
+						'margin-left': 0,
+						'margin-right': 0,
+						});
+					});
+				</script>
+
+			</body>
+		</body>
+		<html>
 
