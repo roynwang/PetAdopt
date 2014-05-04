@@ -26,6 +26,7 @@ exit;
 }
 $children = $ret->children;
 $count = $ret->count;
+
 ?>
 <html lang="en">
 	<head>
@@ -81,13 +82,27 @@ $count = $ret->count;
 			<?php 	
 			for($i=0; $i<$count;$i++){
 			$child = $children[$i];
-			echo ' <div class="col-sm-6 col-md-4">
+			//generate tag display item
+				$tagstr ="";
+				if($child->tag == ""){
+				$tagstr = "";
+				}
+				else{
+				$tags = explode(",",$child->tag);
+				foreach($tags as $tag){
+				$tagstr.='<a href="browse.php?keywords='.$tag.'" class="thumbnail-tag">';
+					$tagstr.=$tag;
+				$tagstr.="</a>";
+				}
+				}
+			//
+			echo ' <div class="col-sm-6 col-md-4 thumbnail-item">
 				<div class="thumbnail thumbnail-searchresult">
 					<img src="./photo/'.$child->uid.'/'.$child->photo.'" alt="..." class="img-searchresult">
 					<div class="caption">
 						<h3>'.$child->name.'</h3>
-						<p>...</p>
-						<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+						<p>'.$tagstr.'</p>
+						<p><a href="./pet.php?uid='.$child->uid.'" class="btn thumbnail-btn" role="button">看看他</a></p>
 					</div>
 				</div>
 			</div>';
@@ -111,7 +126,7 @@ $count = $ret->count;
 			</li>  
 			<li>  
 				<?php
-				if($count==4){
+				if($count==15){
 				$params = "";
 				$params.="keywords=";
 				$params.=$keywords;
@@ -143,7 +158,10 @@ $count = $ret->count;
 						'margin-left': 0,
 						'margin-right': 0,
 						});
+					$('.thumbnail-item').css({
+						'height': $('.thumbnail-item').height(),
 					});
+					})
 				</script>
 
 			</body>

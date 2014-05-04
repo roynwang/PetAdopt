@@ -72,14 +72,38 @@
 	margin-top: 80px;
 }
 
-.pager li a{
+.pager li a, .thumbnail-btn{
 	border:none;
-	font-size:20px;
+	font-size:15px;
 	color:steelBlue;
 	background-color: #D8EFFA;
 }
-.pager li a:hover {
+.pager li a:hover, .thumbnail-btn:hover{
 	background-color: #88BBD4;
 	color:white;
+	border: none;
 }
+
+.thumbnail-item {
+	padding-left:0;
+	padding-right:80px;
+}
+
+.thumbnail-tag {
+	background-color: #EDF4ED;
+	margin-right: 5px;
+	font-size: 16px;
+	color:#2C953B;
+	padding : 5px;
+	border-radius:5px;
+}
+.thumbnail-tag:hover{
+	background-color: #83BF73;
+	text-decoration:none;
+	color:white;
+}
+
+
+
+
 
