@@ -16,7 +16,7 @@ $page = $_GET["page"];
 }
 $offset = $page*15;
 ob_start();
-$count=15;
+$maxcount=15;
 require_once("search.php");
 $ret = ob_get_contents();
 ob_end_clean();
