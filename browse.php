@@ -20,6 +20,7 @@ $maxcount=15;
 require_once("search.php");
 $ret = ob_get_contents();
 ob_end_clean();
+//echo $ret;
 $ret = json_decode($ret);
 if($ret->msg != "Success"){
 exit;

@@ -1,11 +1,11 @@
 <?php
 $count = 0;
-function selectequal($tarcols,$skey){
+function selectequal($cols,$skey){
 	$where ="";
 	$connector = " ";
 	global $count;
+	$tarcols = array_keys($cols);
 	foreach($tarcols as $tarcol ){
-
 		$where .= $connector;
 		$where .= "lower($tarcol) = lower('$skey')";
 		if($connector == " "){
@@ -17,14 +17,16 @@ function selectequal($tarcols,$skey){
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
+		$item["weight"] = 1000;
 		$ret[] = $item;
 	}
 	return $ret;
 }
-function selectlocate($tarcols,$skey){
+function selectlocate($cols,$skey){
 	$where ="";
 	$connector = " ";
 	global $count;
+	$tarcols = array_keys($cols);
 	foreach($tarcols as $tarcol ){
 		$where .= $connector;
 		$where .= "LOCATE('$skey', $tarcol) != 0  ";
@@ -32,12 +34,12 @@ function selectlocate($tarcols,$skey){
 			$connector = " OR ";
 		}
 	}
-
 	$sql = "SELECT * FROM pets_table WHERE $where";
 	$result = mysql_query($sql);
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
+		$item["weight"]=10;
 		$ret[] = $item;
 	}
 	return $ret;
@@ -48,25 +50,27 @@ function cleanarr($arr){
 	$tmpall = Array();
 	foreach($arr as $item){
 		if(array_key_exists($item['uid'], $tmp)){
-			$tmp[$item['uid']]++;
+			$tmp[$item['uid']]+=$item["weight"];
 		}
 		else{
-			$tmp[$item['uid']] = 1;
+			$tmp[$item['uid']] = $item["weight"];
 			$tmpall[$item['uid']] = $item;
 		}
-
 	}
 
-	//!!Debug
-	//print_r($tmp);
+	//sort by weight in descending order 
+	arsort($tmp);
+
 
 	$keytmp=array_keys($tmp);
 	$ret = Array();
 
+	//recaculte the return arary and sort the it by weight
 	$count = 0;
-	for($i = 0; $i<count($tmp);$i++){
+	foreach($tmp as $k=>$v){
 		$count++;
-		$ret[]=$tmpall[$keytmp[$i]];	
+		$tmpall[$k]['weight']=$v;
+		$ret[]=$tmpall[$k];
 	}
 	return $ret;
 }
@@ -95,11 +99,11 @@ if("猫"== $keywords."" || $keywords == "1" || "狗"==$keywords."" || $keywords 
 	mysql_close();
 }
 else{
-	$cols = array("name","description");
+	$cols = array("name"=>1000,"description"=>100);
 	$ret = Array();
 	$keywords=explode(" ", $keywords);
 	foreach($keywords as $keyword){
-		$ret = array_merge($ret,selectequal($cols, $keyword));
+		$ret = array_merge($ret, selectequal($cols, $keyword));
 		$ret = array_merge($ret,selectlocate($cols, $keyword));
 	}
 	$ret = cleanarr($ret);
