@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-
 $editMode = false;
-
 function getExtension($file){
 	$info = pathinfo($file);
 	return $info['extension'];
@@ -24,6 +22,7 @@ function getImages($dir){
 }
 
 require_once("consvr.php");
+$curuid=$_GET['uid'];
 $result = mysql_query("SELECT * FROM pets_table WHERE uid=".$_GET['uid']);
 $item = mysql_fetch_array($result);
 
@@ -37,7 +36,7 @@ mysql_close();
 $editMode = false;
 if( isset($_SESSION['name']) &&
 	$_SESSION['name'] == $item['salvor'] &&
-    array_key_exists("edit",$_GET) &&
+	array_key_exists("edit",$_GET) &&
 	$_GET['edit'] == '1'
 	){
 	$editMode = true;
@@ -57,8 +56,8 @@ if(!$item){
 <!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <script type="text/javascript">
-var isEdit = false;
-var editStory = false;
+	var isEdit = false;
+	var editStory = false;
 </script>
 <?php
 if($editMode){
@@ -107,15 +106,15 @@ if($editMode){
 <div id="home" class="content">
 	<h2>故事</h2>
 	<p id="pet_desc"><textarea id="new_desc"><?php
-	echo $item['description'];
-	?></textarea><a id="txt_desc"><?php
-	$str = str_replace('　', ' ', $item['description']);
-	$str =str_replace("\n","<br>",$str);
-	$str =str_replace(" ", "&nbsp;",$str);
-	echo $str;
-	?></a></p>
-</br><p><a id="edit_story" class="button" onclick="editstory()">编辑</a></p>
-<p id = "story_result"></p>
+		echo $item['description'];
+		?></textarea><a id="txt_desc"><?php
+		$str = str_replace('　', ' ', $item['description']);
+		$str =str_replace("\n","<br>",$str);
+		$str =str_replace(" ", "&nbsp;",$str);
+		echo $str;
+		?></a></p>
+	</br><p><a id="edit_story" class="button" onclick="editstory()">编辑</a></p>
+	<p id = "story_result"></p>
 </div>
 <!-- /Home -->
 
@@ -143,13 +142,18 @@ if($editMode){
 		<!--<p class="footnote">Dribbble shots by <a href="http://dribbble.com/stuntman">Matt Kaufenberg</a>.</p>-->
 	</div>
 </div>
+
+
 <div id="addpic_dial" class="menu">
 	<fieldset id="child_form">
-		<form method="post" >
+	<form id="upfile" action="upload_file.php" enctype="multipart/form-data" method="post">
 			<p>
-				<label class="menu_sublabel" >文件</label>
+				<label class="menu_sublabel" >上传文件</label>
 			</br>
-			<input id="file_path" type="file" title="路径">
+			<input id="file_path" name="upfile" type="file" title="路径">
+			<?php
+			 echo '<input name="uid" type="text" value="'.$curuid.'" style="display:none">';  
+			?>
 		</p>
 	</br>
 	<input id="file_submit" class="menubutton" value="确定" type="submit">
@@ -158,7 +162,6 @@ if($editMode){
 </fieldset>
 </div>
 
-<!-- /Portfolio -->
 
 <!-- About -->
 <div id="about" class="panel">
@@ -185,21 +188,21 @@ if($editMode){
 <!-- Header with Navigation -->
 <div id="header">
 	<h1>
-	<?php
-	echo '<img id="petavator" class="avator"  src="./photo/'.$item['uid']."/".$item['photo'].'">';
-	echo $item['name'];
-	?>
-</h1>
-<ul id="navigation">
-	<li><a id="link-home" href="#home">故事</a></li>
-	<li><a id="link-portfolio" href="#portfolio">照片</a></li>
-	<li><a id="link-about" href="#about">救助人</a></li>
-</ul>
-<div id="tosaveuid" style="display:none"><?php
-echo $item['uid'];
-?>
-</div>
-<!-- disable Nav -->
+		<?php
+		echo '<img id="petavator" class="avator"  src="./photo/'.$item['uid']."/".$item['photo'].'">';
+		echo $item['name'];
+		?>
+	</h1>
+	<ul id="navigation">
+		<li><a id="link-home" href="#home">故事</a></li>
+		<li><a id="link-portfolio" href="#portfolio">照片</a></li>
+		<li><a id="link-about" href="#about">救助人</a></li>
+	</ul>
+	<div id="tosaveuid" style="display:none"><?php
+		echo $item['uid'];
+		?>
+	</div>
+	<!-- disable Nav -->
 <!--<nav id="codrops-demos">
 <a class="current-demo" href="#home">Demo 1</a>
 <a href="index2.html#home">Demo 2</a>
@@ -212,68 +215,68 @@ echo $item['uid'];
 <script src="javascripts/jquery.js" type="text/javascript"></script> 
 <script type="text/javascript">
 
-function addpicdial(){
-	curtop = $("#add_pic").offset().top - $("#addchild_dial").height() -100;
-	curleft = $("#add_pic").offset().left - $("#addchild_dial").width()-15;
-	$("#addpic_dial").css({left:curleft, top:curtop});
-	$("#addpic_dial").fadeIn();
-}
+	function addpicdial(){
+		curtop = $("#add_pic").offset().top - $("#addchild_dial").height() -100;
+		curleft = $("#add_pic").offset().left - $("#addchild_dial").width()-15;
+		$("#addpic_dial").css({left:curleft, top:curtop});
+		$("#addpic_dial").fadeIn();
+	}
 
-function set_cover(imgname){
-	$.post("updatepet.php",{uid:$("#tosaveuid").text(),photo:imgname},function(data,status){
-		if(data == "Success"){
-			ori = $("#petavator").attr("src");
-			cur = ori.replace(/[^\/]*$/,imgname);
-			$("#petavator").attr("src",cur);
+	function set_cover(imgname){
+		$.post("updatepet.php",{uid:$("#tosaveuid").text(),photo:imgname},function(data,status){
+			if(data == "Success"){
+				ori = $("#petavator").attr("src");
+				cur = ori.replace(/[^\/]*$/,imgname);
+				$("#petavator").attr("src",cur);
+			}
+			else{
+				alert("Set cover failed");
+			}
+		}
+		)
+	}
+
+
+	function editstory(){
+		if(!editStory){
+			if($("#pet_desc").height() < 300){
+				$("#pet_desc").height(300);
+			}
+			$("#txt_desc").hide();
+			$("#new_desc").fadeIn();
+			$("#edit_story").text("提交");
+			editStory = true;
 		}
 		else{
-			alert("Set cover failed");
+			desc = $("#new_desc").val();
+			$("#edit_story").text("编辑");
+			$("#pet_desc").height("auto");
+			$.post("updatepet.php",{uid:$("#tosaveuid").text(), description:desc}, function(data, status){
+				if(data == "Success")
+					location.reload(true);
+				else{
+					$("#story_result").text(data);
+				}
+			});
+			editStory = false;
 		}
 	}
-)
-}
-
-
-function editstory(){
-	if(!editStory){
-		if($("#pet_desc").height() < 300){
-			$("#pet_desc").height(300);
-		}
-		$("#txt_desc").hide();
-		$("#new_desc").fadeIn();
-		$("#edit_story").text("提交");
-		editStory = true;
+	if(isEdit == false){
+		$("#add_pic").hide();
+		$("#edit_story").hide();
+		$(".del_child").hide();
 	}
-	else{
-		desc = $("#new_desc").val();
-		$("#edit_story").text("编辑");
-		$("#pet_desc").height("auto");
-		$.post("updatepet.php",{uid:$("#tosaveuid").text(), description:desc}, function(data, status){
-			if(data == "Success")
-				location.reload(true);
-			else{
-				$("#story_result").text(data);
-			}
-		});
-		editStory = false;
-	}
-}
-if(isEdit == false){
-	$("#add_pic").hide();
-	$("#edit_story").hide();
-	$(".del_child").hide();
-}
 
-$(document).ready(
-	function(){
-		$("#new_desc").hide();
-		$(document).mousedown(function(e){
-			if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
-				$(".menu").fadeOut();
-			}
-		});
+	$(document).ready(
+		function(){
+			$("#new_desc").hide();
+			$(document).mousedown(function(e){
+				if($(e.target).parents(".menu").length==0 && $(".menu").is(':visible')){
+					$(".menu").fadeOut();
+				}
+			});
 
-	});
+		});
 
 </script>
 </body>
