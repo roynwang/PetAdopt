@@ -29,7 +29,7 @@ function selectlocate($cols,$skey){
 	$tarcols = array_keys($cols);
 	foreach($tarcols as $tarcol ){
 		$where .= $connector;
-		$where .= "LOCATE('$skey', $tarcol) != 0  ";
+		$where .= "LOCATE(lower('$skey'), lower($tarcol)) != 0  ";
 		if($connector == " "){
 			$connector = " OR ";
 		}
