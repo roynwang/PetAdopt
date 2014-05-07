@@ -1,45 +1,25 @@
 <?php
 $count = 0;
-function selectequal($cols,$skey){
-	$where ="";
+function selectequal($col,$val,$skey){
 	$connector = " ";
 	global $count;
-	$tarcols = array_keys($cols);
-	foreach($tarcols as $tarcol ){
-		$where .= $connector;
-		$where .= "lower($tarcol) = lower('$skey')";
-		if($connector == " "){
-			$connector = " OR ";
-		}
-	}
-	$sql = "SELECT * FROM pets_table WHERE $where";
+	$sql = "SELECT * FROM pets_table WHERE LOWER($col)=LOWER('$skey')";
 	$result = mysql_query($sql);
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
-		$item["weight"] = 1000;
+		$item["weight"] = 1000*$val;
 		$ret[] = $item;
 	}
 	return $ret;
 }
-function selectlocate($cols,$skey){
-	$where ="";
-	$connector = " ";
+function selectlocate($col,$val,$skey){
 	global $count;
-	$tarcols = array_keys($cols);
-	foreach($tarcols as $tarcol ){
-		$where .= $connector;
-		$where .= "LOCATE(lower('$skey'), lower($tarcol)) != 0  ";
-		if($connector == " "){
-			$connector = " OR ";
-		}
-	}
-	$sql = "SELECT * FROM pets_table WHERE $where";
+	$sql = "SELECT *,(LENGTH(description) - LENGTH(REPLACE(description, '$skey', '')))/LENGTH('$skey') *10*$val as weight FROM pets_table WHERE LOCATE(LOWER('$skey'),LOWER($col))>0 AND LOWER($col)!=LOWER('$skey')";
 	$result = mysql_query($sql);
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
-		$item["weight"]=10;
 		$ret[] = $item;
 	}
 	return $ret;
@@ -61,11 +41,9 @@ function cleanarr($arr){
 	//sort by weight in descending order 
 	arsort($tmp);
 
-
-	$keytmp=array_keys($tmp);
 	$ret = Array();
 
-	//recaculte the return arary and sort the it by weight
+	//rebuild the return arary
 	$count = 0;
 	foreach($tmp as $k=>$v){
 		$count++;
@@ -99,12 +77,16 @@ if("猫"== $keywords."" || $keywords == "1" || "狗"==$keywords."" || $keywords 
 	mysql_close();
 }
 else{
-	$cols = array("name"=>1000,"description"=>100);
+	$colshash = array("name"=>10,"description"=>1);
 	$ret = Array();
 	$keywords=explode(" ", $keywords);
+	$cols = array_keys($colshash);
 	foreach($keywords as $keyword){
-		$ret = array_merge($ret, selectequal($cols, $keyword));
-		$ret = array_merge($ret,selectlocate($cols, $keyword));
+		foreach($colshash as $col=>$val){
+			$ret = array_merge($ret,selectequal($col,$val, $keyword));
+			$ret = array_merge($ret,selectlocate($col,$val, $keyword));
+		}
+		
 	}
 	$ret = cleanarr($ret);
 	$ret = array('msg' => "Success", 'count'=>$count,'children' => $ret, 'query'=>"COMPLEX:NOT READABLE");
