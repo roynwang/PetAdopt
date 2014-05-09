@@ -1,5 +1,51 @@
 <?php
+#session_set_save_handler(NULL, NULL, NULL, NULL, 'destroysession', NULL);
+session_start();
+if(is_dir("./tmp")){
+	mkdir("tmp", 0777, true);
+}
+
+$pagesize = 15;
 $count = 0;
+//if searchmd5 setted and equal to the existed value
+if(isset($_SESSION['keywords']) && $_SESSION['keywords'] == $keywords){
+//read
+	$ret = readresult($_SESSION['tmpsearchfile']);
+	buildret($ret,$page);
+	return;
+}
+if(isset($_SESSION['tmpsearchfile'])){
+	unlink($_SESSION['tmpsearchfile']);
+	unset($_SESSION['tmpsearchfile']);
+}
+//if the md5 has not been setted or not equal to the existed
+$_SESSION['keywords']= $keywords;
+
+function destroysession(){
+	unlink($_SESSION['tmpsearchfile']);
+}
+
+
+function buildret($ret, $page){
+	global $pagesize;
+	$offset = $page*$pagesize;
+	$ret = array_slice($ret, $offset, $pagesize);
+	$count = count($ret);
+	$retjson = array('msg' => "Success", 'count'=>$count,'children' => $ret, 'query'=>"COMPLEX:NOT READABLE");
+	echo json_encode($retjson);
+}
+
+function writeresult($filename,$arr){
+	$handle = fopen($filename, "w");
+	fwrite($handle,serialize($arr));
+	fclose($handle);
+}
+
+function readresult($filename){
+	return unserialize(file_get_contents($filename));
+}
+
+
 function selectequal($col,$val,$skey){
 	$connector = " ";
 	global $count;
@@ -38,12 +84,12 @@ function cleanarr($arr){
 		}
 	}
 
-	//sort by weight in descending order 
+//sort by weight in descending order 
 	arsort($tmp);
 
 	$ret = Array();
 
-	//rebuild the return arary
+//rebuild the return arary
 	$count = 0;
 	foreach($tmp as $k=>$v){
 		$count++;
@@ -66,15 +112,12 @@ if("猫"== $keywords."" || $keywords == "1" || "狗"==$keywords."" || $keywords 
 	$limit = "LIMIT $offset, $maxcount;";
 	$sql.=$limit;
 	$result = mysql_query($sql);
-	$arr = Array();
+	$ret = Array();
 	$count = 0;
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
-		$arr[] = $item;
+		$ret[] = $item;
 		$count++;
 	}
-	$ret = array('msg' => "Success", 'count'=>$count,'children' => $arr, 'query'=>$sql);
-	echo json_encode($ret);
-	mysql_close();
 }
 else{
 	$colshash = array("name"=>10,"description"=>1);
@@ -86,11 +129,14 @@ else{
 			$ret = array_merge($ret,selectequal($col,$val, $keyword));
 			$ret = array_merge($ret,selectlocate($col,$val, $keyword));
 		}
-		
+
 	}
 	$ret = cleanarr($ret);
-	$ret = array('msg' => "Success", 'count'=>$count,'children' => $ret, 'query'=>"COMPLEX:NOT READABLE");
-	echo json_encode($ret);
-	mysql_close();
 }
+
+$_SESSION['tmpsearchfile'] = tempnam("./tmp",date("YmdHis")) ;
+echo $_SESSION['tmpsearchfile'];
+writeresult($_SESSION['tmpsearchfile'], $ret);
+buildret($ret,$page);
+mysql_close();
 ?>
