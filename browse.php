@@ -2,6 +2,7 @@
 <?php
 $offset = 0;
 $page=0;
+$pagesize=15;
 $keywords="";
 if(isset($_GET["keywords"])){
 $keywords=$_GET["keywords"];
@@ -14,13 +15,12 @@ exit;
 if(isset($_GET["page"])){
 $page = $_GET["page"];
 }
-$offset = $page*15;
+$offset = $page*$pagesize;
 ob_start();
-$maxcount=15;
 require_once("search.php");
 $ret = ob_get_contents();
 ob_end_clean();
-echo $ret;
+//echo $ret;
 $ret = json_decode($ret);
 if($ret->msg != "Success"){
 exit;
@@ -81,7 +81,7 @@ $count = $ret->count;
 		</nav>
 		<div class="container" id="result-container">
 			<?php 	
-			for($i=0; $i<$count;$i++){
+			for($i=0; $i<$pagesize && $i<$count-($page)*$pagesize;$i++){
 			$child = $children[$i];
 			//generate tag display item
 				$tagstr ="";
@@ -127,7 +127,7 @@ $count = $ret->count;
 			</li>  
 			<li>  
 				<?php
-				if($count==15){
+				if($count>($page+1)*$pagesize){
 				$params = "";
 				$params.="keywords=";
 				$params.=$keywords;

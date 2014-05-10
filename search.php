@@ -25,7 +25,6 @@ if(!is_dir("temp")){
 	mkdir("temp", 0777, true);
 }
 
-$pagesize = 15;
 $count = 0;
 //if searchmd5 setted and equal to the existed value
 if(isset($_SESSION['keywords']) && $_SESSION['keywords'] == $keywords){
@@ -37,7 +36,7 @@ if(isset($_SESSION['keywords']) && $_SESSION['keywords'] == $keywords){
 	}
 }
 if(isset($_SESSION['tmpsearchfile'])){
-	unlink($_SESSION['tmpsearchfile']);
+	file_exists($_SESSION['tmpsearchfile']) && unlink($_SESSION['tmpsearchfile']);
 	unset($_SESSION['tmpsearchfile']);
 }
 //if the md5 has not been setted or not equal to the existed
@@ -45,10 +44,9 @@ $_SESSION['keywords']= $keywords;
 
 
 function buildret($ret, $page){
-	global $pagesize;
+	global $pagesize,$count;
 	$offset = $page*$pagesize;
 	$ret = array_slice($ret, $offset, $pagesize);
-	$count = count($ret);
 	$retjson = array('msg' => "Success", 'count'=>$count,'children' => $ret, 'query'=>"COMPLEX:NOT READABLE");
 	echo json_encode($retjson);
 }
@@ -58,12 +56,17 @@ function writeresult($filename,$arr){
 	$handle = fopen($filename, "w");
 	fwrite($handle,serialize($arr));
 	fclose($handle);
+
 }
 
 function readresult($filename){
 	if(!file_exists($filename))
 		return NULL;
-	return unserialize(file_get_contents($filename));
+
+	global $count;
+	$arr = unserialize(file_get_contents($filename));
+	$count = count($arr);
+	return $arr;
 }
 
 
@@ -75,8 +78,7 @@ function selectequal($col,$val,$skey){
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
-		$item["weight"] = 1000*$val;
-		$ret[] = $item;
+		$item["weight"] = 1000*$val; $ret[] = $item;
 	}
 	return $ret;
 }
@@ -154,7 +156,7 @@ else{
 	}
 	$ret = cleanarr($ret);
 }
-
+$count = count($ret);
 $_SESSION['tmpsearchfile'] = tempnam("./temp",date("YmdHis")) ;
 writeresult($_SESSION['tmpsearchfile'], $ret);
 buildret($ret,$page);
