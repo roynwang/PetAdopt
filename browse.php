@@ -20,7 +20,7 @@ ob_start();
 require_once("search.php");
 $ret = ob_get_contents();
 ob_end_clean();
-//echo $ret;
+echo $ret;
 $ret = json_decode($ret);
 if($ret->msg != "Success"){
 exit;
@@ -66,8 +66,8 @@ $count = $ret->count;
 				<ul class="nav navbar-nav nav-item">
 					<li><img data-src="holder.js/160x80/text:LOGO"></img></li>
 					<li><a href="index.php">首页</a></li>
-					<li><a href="browse.php?keywords=0">汪们</a></li>
-					<li><a href="browse.php?keywords=1">喵们</a></li>
+					<li><a href="browse.php?keywords=狗">汪们</a></li>
+					<li><a href="browse.php?keywords=猫">喵们</a></li>
 					<li class="pull-right"><a href="login.php">救助人入口</a></li>
 				</ul>
 				<form class="navbar-form navbar-right" action="browse.php" method="get">

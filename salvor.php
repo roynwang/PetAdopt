@@ -171,9 +171,16 @@ $(document).ready(
 				for(var i in children.children){
 				var child = children.children[i];
 				// there should be an empty image
-				var imgsrc= 'src=""';
-				if(child.photo!==null || child.photo.length !==0){
+				//var imgsrc= 'src=""';
+				//if(child.photo!==null || child.photo.length !==0){
+				//	imgsrc='src="./photo/'+child.uid+'/'+child.photo+'"';
+				//}
+				var imgsrc;
+				if(child.photo!==null && child.photo.length !==0){
 					imgsrc='src="./photo/'+child.uid+'/'+child.photo+'"';
+				}
+				else{
+					imgsrc='data-src="holder.js/250*250/PIC" ';
 				}
 				imghtml = imghtml + "<div id=\"child"+child.uid+"\" class=\"picdiv\"><li><a href=\"pet.php?uid=" + child.uid + "&edit=1\"><img class=\"child_image\" " + imgsrc + " title=\"单击以编辑它\"><div class=\"picdesc\"><a>" + child['name'] + "</a><div class=\"del_child\" onClick=\"delchild("+child.uid+")\">删除</div></div></a></li></div>";
 				}

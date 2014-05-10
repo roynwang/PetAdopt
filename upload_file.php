@@ -56,6 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 }
+header("Location: ".$_SERVER['HTTP_REFERER']);
+exit();
 
 ?>
 

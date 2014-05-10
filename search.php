@@ -1,6 +1,9 @@
 <?php
+
 session_start();
 $maxSearchCacheCount = 10;
+$compareweight = Array("equal"=>1000, "locate"=>10);
+$colshash = Array("name"=>0,"description"=>5, "tag" =>6 , "species"=> 4);
 
 function cleanSearchCache(){
 	global $maxSearchCacheCount;
@@ -72,27 +75,31 @@ function readresult($filename){
 
 function selectequal($col,$val,$skey){
 	$connector = " ";
-	global $count;
+	global $count, $compareweight;
 	$sql = "SELECT * FROM pets_table WHERE LOWER($col)=LOWER('$skey')";
 	$result = mysql_query($sql);
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
-		$item["weight"] = 1000*$val; $ret[] = $item;
+		$item["weight"] = $compareweight["equal"]*$val; $ret[] = $item;
+#		echo "!!!!!!!!!".$item["weight"];
 	}
 	return $ret;
 }
 function selectlocate($col,$val,$skey){
-	global $count;
-	$sql = "SELECT *,(LENGTH(description) - LENGTH(REPLACE(description, '$skey', '')))/LENGTH('$skey') *10*$val as weight FROM pets_table WHERE LOCATE(LOWER('$skey'),LOWER($col))>0 AND LOWER($col)!=LOWER('$skey')";
+	echo "!!! $col,$val, $skey <br>";
+	global $count, $compareweight;
+	$sql = "SELECT *,(LENGTH(description) - LENGTH(REPLACE(description, '$skey', '')))/LENGTH('$skey')*$val*".$compareweight["locate"]." as weight FROM pets_table WHERE LOCATE(LOWER('$skey'),LOWER($col))>0 AND LOWER($col)!=LOWER('$skey')";
 	$result = mysql_query($sql);
 	$ret = Array();
 	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
 		$count ++;
 		$ret[] = $item;
+		echo "!!!!!!!!!".$item["weight"];
 	}
 	return $ret;
 }
+
 function cleanarr($arr){
 	global $count;
 	$tmp = Array();
@@ -125,33 +132,31 @@ function cleanarr($arr){
 require_once("consvr.php");
 
 $sql = "";
-if("猫"== $keywords."" || $keywords == "1" || "狗"==$keywords."" || $keywords == "0"){
-	if("猫"== $keywords."" || $keywords == "1"){
-		$sql = "SELECT * FROM pets_table WHERE species = 1 ";
-	}
-	else if("狗"==$keywords."" || $keywords == "0"){
-		$sql = "SELECT * FROM pets_table WHERE species = 0 ";
-	}
-	$result = mysql_query($sql);
-	$ret = Array();
-	$count = 0;
-	while($item = mysql_fetch_array($result, MYSQL_ASSOC)){
-		$ret[] = $item;
-		$count++;
-	}
+$ret = Array();
+if($keywords == "猫" || $keywords == "狗"){
+	$ret = array_merge($ret,selectequal("species",$colshash["species"], $keywords));
 }
 else{
-	$colshash = array("name"=>10,"description"=>1);
-	$ret = Array();
 	$keywords=explode(" ", $keywords);
 	$cols = array_keys($colshash);
 	foreach($keywords as $keyword){
+	//special locgic for species
+		if($keyword == "猫" || $keyword == "狗"){
+			//reduce the equal weight when query spieces
+			$compareweight['equal'] = 5;
+			$ret = array_merge($ret,selectequal("species",$colshash["species"], $keyword));
+			$compareweight['equal'] = 1000;
+			continue;
+		}
 		foreach($colshash as $col=>$val){
+			if($col == "species")
+				continue;
 			$ret = array_merge($ret,selectequal($col,$val, $keyword));
 			$ret = array_merge($ret,selectlocate($col,$val, $keyword));
-		}
+			}
 
 	}
+
 	$ret = cleanarr($ret);
 }
 $count = count($ret);

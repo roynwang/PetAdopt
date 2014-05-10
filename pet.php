@@ -3,8 +3,10 @@
 session_start();
 $editMode = false;
 function getExtension($file){
-	$info = pathinfo($file);
-	return $info['extension'];
+	if($file == NULL || $file == "") return NULL;
+ 	$extend=explode ( "."  ,  $file);   
+	$va = count ( $extend )-1;   
+	return   $extend[$va];   
 }
 function getImages($dir){
 	$images[]=NULL;
@@ -12,7 +14,7 @@ function getImages($dir){
 	if(false != ($handle = opendir($dir))){
 		while( false!= ($file = readdir($handle))){
 			$type = getExtension($file); 
-			if($type == "jpg" || $type == 'jpeg'){
+			if($type == "jpg" || $type == 'jpeg' || $type == 'png'){
 				$images[$i] = $dir.'/'.$file;	
 				$i++;
 			}
@@ -88,9 +90,8 @@ if($editMode){
 			echo '<strong>返回个人页面</strong>';
 		}
 		else{
-
-			echo '<a href="index.php">';
-			echo '<strong>返回主页</strong>';
+			echo '<a href="'.$_SERVER['HTTP_REFERER'].'">';
+			echo '<strong>返回</strong>';
 		}
 		?>
 	</a>
@@ -126,11 +127,14 @@ if($editMode){
 			<?php
 			$dir = "./photo/".$item['uid'];
 			$desc_html = "";
-			if($editMode){
-				$desc_html = '<div class="picdesc"><div class="left_desc" onClick=set_cover("'.$filename.'")>设为封面</div><div class="del_child">删除</div></div>';
-			}
+
 			foreach(getImages($dir) as $image){
 				$filename = trim(basename($image));
+				if($filename == NULL || $filename == "" )
+					break;
+			if($editMode){
+				$desc_html = '<div class="picdesc"><div class="left_desc" onClick=set_cover("'.$filename.'")>设为头像</div><div class="del_child">删除</div></div>';
+			}
 				echo '<div class="picdiv"><li><a><img src= "'.$image.'">'.$desc_html.'</a></li></div>';
 			}
 			?>
@@ -189,7 +193,12 @@ if($editMode){
 <div id="header">
 	<h1>
 		<?php
-		echo '<img id="petavator" class="avator"  src="./photo/'.$item['uid']."/".$item['photo'].'">';
+		if($item['photo'] != ""){
+			echo '<img id="petavator" class="avator"  src="./photo/'.$item['uid']."/".$item['photo'].'">';
+		}
+		else{
+			echo '<img id="petavator" class="avator"  data-src="holder.js/60x60/^_^">';
+		}
 		echo $item['name'];
 		?>
 	</h1>
@@ -212,7 +221,10 @@ if($editMode){
 
 
 
-<script src="javascripts/jquery.js" type="text/javascript"></script> 
+
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/docs.min.js"></script>
 <script type="text/javascript">
 
 	function addpicdial(){
@@ -225,9 +237,11 @@ if($editMode){
 	function set_cover(imgname){
 		$.post("updatepet.php",{uid:$("#tosaveuid").text(),photo:imgname},function(data,status){
 			if(data == "Success"){
-				ori = $("#petavator").attr("src");
-				cur = ori.replace(/[^\/]*$/,imgname);
-				$("#petavator").attr("src",cur);
+				//cur = ori.replace(/[^\/]*$/,imgname);
+				//$("#petavator").attr("data-src",cur);
+				tuid = $("#tosaveuid").text().trim();
+				newavator = "./photo/"+tuid+"/"+imgname;
+				$("#petavator").attr("src",newavator);
 			}
 			else{
 				alert("Set cover failed");
