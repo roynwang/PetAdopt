@@ -1,8 +1,28 @@
 <?php
-#session_set_save_handler(NULL, NULL, NULL, NULL, 'destroysession', NULL);
 session_start();
-if(is_dir("./tmp")){
-	mkdir("tmp", 0777, true);
+$maxSearchCacheCount = 10;
+
+function cleanSearchCache(){
+	global $maxSearchCacheCount;
+	$fi = new FilesystemIterator("./temp", FilesystemIterator::SKIP_DOTS);
+	if($fi > $maxSearchCacheCount){
+		//delete the oldest one
+		$files = glob( './temp/*' );
+		// Sort files by modified time, latest to earliest
+		// Use SORT_ASC in place of SORT_DESC for earliest to latest
+		array_multisort(
+			array_map( 'filemtime', $files ),
+			SORT_NUMERIC,
+			SORT_ASC,
+			$files
+		);
+		unlink($files[0]);
+	}
+}
+
+
+if(!is_dir("temp")){
+	mkdir("temp", 0777, true);
 }
 
 $pagesize = 15;
@@ -11,8 +31,10 @@ $count = 0;
 if(isset($_SESSION['keywords']) && $_SESSION['keywords'] == $keywords){
 //read
 	$ret = readresult($_SESSION['tmpsearchfile']);
-	buildret($ret,$page);
-	return;
+	if($ret != NULL) {
+		buildret($ret,$page);
+		return;
+	}
 }
 if(isset($_SESSION['tmpsearchfile'])){
 	unlink($_SESSION['tmpsearchfile']);
@@ -20,10 +42,6 @@ if(isset($_SESSION['tmpsearchfile'])){
 }
 //if the md5 has not been setted or not equal to the existed
 $_SESSION['keywords']= $keywords;
-
-function destroysession(){
-	unlink($_SESSION['tmpsearchfile']);
-}
 
 
 function buildret($ret, $page){
@@ -36,12 +54,15 @@ function buildret($ret, $page){
 }
 
 function writeresult($filename,$arr){
+	cleanSearchCache();
 	$handle = fopen($filename, "w");
 	fwrite($handle,serialize($arr));
 	fclose($handle);
 }
 
 function readresult($filename){
+	if(!file_exists($filename))
+		return NULL;
 	return unserialize(file_get_contents($filename));
 }
 
@@ -134,8 +155,7 @@ else{
 	$ret = cleanarr($ret);
 }
 
-$_SESSION['tmpsearchfile'] = tempnam("./tmp",date("YmdHis")) ;
-echo $_SESSION['tmpsearchfile'];
+$_SESSION['tmpsearchfile'] = tempnam("./temp",date("YmdHis")) ;
 writeresult($_SESSION['tmpsearchfile'], $ret);
 buildret($ret,$page);
 mysql_close();
