@@ -132,8 +132,6 @@ if("猫"== $keywords."" || $keywords == "1" || "狗"==$keywords."" || $keywords 
 	else if("狗"==$keywords."" || $keywords == "0"){
 		$sql = "SELECT * FROM pets_table WHERE species = 0 ";
 	}
-	$limit = "LIMIT $offset, $maxcount;";
-	$sql.=$limit;
 	$result = mysql_query($sql);
 	$ret = Array();
 	$count = 0;
